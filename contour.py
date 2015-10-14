@@ -5,12 +5,18 @@ import numpy as np
 import cv2
 from matplotlib import pyplot as plt
 
-        
+RED = (255,0,0)
+GREEN = (0, 255, 0)
+BLUE = (0, 0, 255)
+WHITE = (255, 255, 255)
+BLACK = (0,0,0)
+
 def imshow(name, image):
     plt.imshow(image)
     plt.title(name)    
     plt.show()
-
+    cv2.imshow(name, image)
+    cv2.waitKey()
 
 def draw_contour(image, c, i):
     # compute the center of the contour area and draw a circle
@@ -24,45 +30,30 @@ def draw_contour(image, c, i):
 
     # draw the countour number on the image
     cv2.putText(image, "#{}".format(i + 1), (cX - 20, cY), cv2.FONT_HERSHEY_SIMPLEX,
-        1.0, (255, 255, 255), 2)
+        1.0, GREEN, 2)
 
     cv2.drawContours(image, c, -1, (0, 255,  255))
     rect = cv2.minAreaRect(c)
     box = cv2.boxPoints(rect)
     box = np.int0(box)
-    cv2.drawContours(image,[box],0,(0,255,0 ),2)
+    cv2.drawContours(image,[box],0,(GREEN),2)
     # return the image with the contour number drawn on it
     return image
 
 # construct the argument parser and parse the arguments
 # load the image and initialize the accumulated edge image
-image = cv2.imread("photo1.jpg")
-gray = image
+image = cv2.imread("photo1_dropped.jpg")
 #cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
 imshow("image", image)
 
 # in both the x and y direction
-gray = image
-#gradX = cv2.Sobel(gray, ddepth = cv2.CV_32F, dx = 1, dy = 0, ksize = -1)
-#gradY = cv2.Sobel(gray, ddepth = cv2.CV_32F, dx = 0, dy = 1, ksize = -1)
-
-# subtract the y-gradient from the x-gradient
-#gradient = cv2.subtract(gradX, gradY)
-#gradient = cv2.convertScaleAbs(gradient)
-
-# blur and threshold the image
-blurred = cv2.blur(gray, (5, 5))
-imshow("gray", gray)
-imshow("blurred", blurred)
-(_, thresh) = cv2.threshold(blurred, 225, 255, cv2.THRESH_BINARY)
-closed= blurred
-# construct a closing kernel and apply it to the thresholded image
-#kernel = cv2.getStructuringElement(cv2.MORPH_RECT, (21, 7))
-#closed = cv2.morphologyEx(thresh, cv2.MORPH_CLOSE, kernel)
 
 # perform a series of erosions and dilations
-#closed = cv2.erode(closed, None, iterations = 4)
-#closed = cv2.dilate(closed, None, iterations = 4)
+for i in range(1,5) :
+	closed = cv2.erode(image, None, iterations = 2)
+	closed = cv2.dilate(closed, None, iterations = 2)
+
+imshow("closed", closed)
 image = closed
 
 accumEdged = np.zeros(image.shape[:2], dtype="uint8")
