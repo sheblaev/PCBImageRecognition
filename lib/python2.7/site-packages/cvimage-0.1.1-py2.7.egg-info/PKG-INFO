@@ -1,0 +1,12 @@
+Metadata-Version: 1.1
+Name: cvimage
+Version: 0.1.1
+Summary: Chainable wrapper for OpenCV's python bindings.
+Home-page: https://github.com/kremonte/cvimage
+Author: Dan Rouse
+Author-email: dan@rouse.house
+License: UNKNOWN
+Download-URL: https://github.com/kremonte/cvimage/tarball/0.1.1
+Description: UNKNOWN
+Keywords: opencv,chainable
+Platform: UNKNOWN
