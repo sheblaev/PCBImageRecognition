@@ -1,5 +1,6 @@
 2015-10-20
-1. Neural network: fann, ng's
+1. Neural network: fann, http://geektimes.ru/post/67194/
+                   ng's http://habrahabr.ru/post/258611/
 - shift window 1/3(??)
 - train/test set
 - train/test ratio -> Ng's lectures
@@ -8,3 +9,4 @@
 
 3. background coarsening: dict[R/G/B:frequency]
 
+ study python, learn ipytnon, matplotlib?
