@@ -1,0 +1,10 @@
+2015-10-20
+1. Neural network: fann, ng's
+- shift window 1/3(??)
+- train/test set
+- train/test ratio -> Ng's lectures
+
+2. background coarsening: dict[RGB:frequency]
+
+3. background coarsening: dict[R/G/B:frequency]
+
