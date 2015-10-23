@@ -49,36 +49,48 @@ def draw_contour(image, c, i):
 image = cv2.imread("photo3.jpg")
 imshow("initial", image)
 #gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-(_, w, h) = image .shape[::-1]
+(_, w, h) = image.shape[::-1]
 print (w, h)
 
-value = {[0,0,0]:0}
+value = {tuple([0,0,0]):0}
 # Let's detect the most frequents color on board and remove them before grayscaling
 for x  in range(w):
         for y in range(h):
-                c =  image[y][x]
+                c =  tuple(image[y][x])
+		(r,g,b) = tuple(image[y][x])
+		R = r/15*15
+		G = g/15*15
+		B = b/15*15
+		c = (R,G,B)
                 if not c in value: 
                         value[c] = 1
                 else: 
                         value[c] +=1
+#value[(105,105,105)] = 0
+#value[(120,120,120)] = 0
+value[(255,255,255)] = 1000000
 
 inverted = invert_dict_nonunique(value)
 
-del_colors =  sorted(inverted)[-40:]
+del_colors =  sorted(inverted)[-10:]
 
 for i in range(len(del_colors)):
         print i, inverted[del_colors[i]]
 
-imshow("gray", gray)
+#imshow("gray", gray)
 print del_colors
 for x  in range(w):
         for y in range(h):
-                if value [gray[y][x] ] in del_colors:
-                       gray[y][x] = 0 
+		(r,g,b) = tuple(image[y][x])
+		R = r/15*15
+		G = g/15*15
+		B = b/15*15
+                if value [ (R,G,B)] in del_colors:
+                       image[y][x] = [0, 0, 0] 
 
-
-gray = cv2.medianBlur(gray, 3)
-
+imshow("image", image)
+cv2.imwrite("gray.png", image)
+"""
 accumEdged = np.zeros(image.shape[:2], dtype="uint8")
 edged = cv2.Canny(gray, 150, 250)
 accumEdged = cv2.bitwise_or(accumEdged, edged)
@@ -93,5 +105,4 @@ for (i, c) in enumerate(cnts):
 imshow("filtered", gray)
 imshow("image", image)
 imshow("image", accumEdged)
-cv2.imwrite("gray.png", gray)
-cv2.waitKey()
+"""
